@@ -17,3 +17,22 @@ Then, in this course we will use both BDD with TDD to write unit tests for a Bac
 Finally, this course will covers other important aspects of testing, such as performance, stress, security, automation and deployment. 
 
 ## Course Structure
+* Introduction
+* Test-driven development (TDD)
+* Behavior-driven development (BDD)
+* QUnit
+  * Introduction
+  * Assertions
+  * Adding structure to assertions
+  * Assertion examples
+  * Fixtures
+  * Exercise
+* Jasmine
+  * Introduction
+  * Suites, Specs & Spies
+  * beforeEach and afterEach
+  * Exercise
+* Testing backbone applications with QUnit 
+* Testing backbone applications with Jasmine
+* Extensions/Libraries
+* Further reading
