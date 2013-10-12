@@ -8,31 +8,29 @@
 </section>
 <!--SLIDE1-->
 <section>
-
 	<section>
 		<h2>Qu'est-ce que MVC?</h2>
-	<ul>
-		<li>MVC de l'anglais model-view-controller</li>
-		<li>Ce paradigme regroupe les fonctions nécessaires en trois catégories :</li>
-		<ol>
-			<li>un modèle (modèle de données)</li>
-			<li>une vue (présentation, interface utilisateur)</li>
-			<li>un contrôleur (logique de contrôle, gestion des événements, synchronisation)</li>
-		</ol>
-	</ul>
+		<ul>
+			<li>MVC de l'anglais model-view-controller</li>
+			<li>Ce paradigme regroupe les fonctions nécessaires en trois catégories :</li>
+			<ol>
+				<li>un modèle (modèle de données)</li>
+				<li>une vue (présentation, interface utilisateur)</li>
+				<li>un contrôleur (logique de contrôle, gestion des événements, synchronisation)</li>
+			</ol>
+		</ul>
 	</section>
-
 	<section>
 		<h2>"Bonjour tout le monde" en modèle MVC</h2>
 		<pre><code>var M = {}, V = {}, C = {};
 
-	M.data = "Bonjour tout le monde";
+M.data = "Bonjour tout le monde";
 
-	V.render = function (M) { alert(M.data); }
+V.render = function (M) { alert(M.data); }
 
-	C.handleOnload = function () { V.render(M); }
+C.handleOnload = function () { V.render(M); }
 
-	window.onload = C.handleOnLoad;</code></pre>
+window.onload = C.handleOnLoad;</code></pre>
 	</section>
 
 </section>
@@ -46,23 +44,22 @@
 			<li>Backbonejs peut se définir comme un framework MVC mais pas au sens classique du terme. <br>Ici le C représente des Collections d’objets. Le M et le V désignent respectivement les modèles et les vues.</li>
 		</ul>
 	</section>
-<section>
-	<h2>"Bonjour tout le monde" en modèle Backbone.js</h2>
-	<pre><code>(function($){
-	  var AppView = Backbone.View.extend({    
-	    el: $('body'),
-	    render: function(){
-	      $(this.el).append("<h1>Bonjour tout le monde</h1>");
-	    },
-	    initialize: function(){
-	      _.bindAll(this, 'render');           
-	       this.render();
-	    },
-	  });
-	  var appView = new AppView();      
-	})(jQuery);
-	</code></pre>
-</section>
+	<section>
+		<h2>"Bonjour tout le monde" en modèle Backbone.js</h2>
+		<pre><code>(function($){
+     var AppView = Backbone.View.extend({    
+         el: $('body'),
+         render: function(){
+             $(this.el).append("Bonjour tout le monde");
+         },
+         initialize: function(){
+             _.bindAll(this, 'render');           
+             this.render();
+         },
+     });
+     var appView = new AppView();      
+ })(jQuery);</code></pre>
+	</section>
 </section>
 
 <section>
@@ -93,15 +90,13 @@
 				Les modèles peuvent être créés par:
 				<pre><code>var MyModel = Backbone.Model.extend({});</code></pre>
 			</li>
-			<li>
-				<pre><code>// We can then create our own concrete instance of a (Todo) model 
-	// with no values at all:
-	var myModel1 = new MyModel();
-	console.log(myModel1);
-	// or with some arbitrary data:
-	var myModel2 = new MyModel({
-	    title: 'my first title model', completed: true
-	});</code></pre>
+			<li> We can then create our own concrete instance of a (Todo) model with no values at all:
+				<pre><code>var myModel1 = new MyModel();
+console.log(myModel1);
+// or with some arbitrary data:
+var myModel2 = new MyModel({
+     title: 'my first title model', completed: true
+});</code></pre>
 			</li>
 		</ul>
 		<aside class="notes">extend sets up the prototype chain</aside>
@@ -124,12 +119,11 @@ var myModel = new MyModel();</code></pre></li>
 		<li>
 			There are times when you want your model to have a set of default values (e.g. in a scenario where a complete set of data isn’t provided by the user):
 			<pre><code>var Todo = Backbone.Model.extend({
-	 defaults: {
+     defaults: {
 		 title: '',
 		 completed: false
- 	 }
-});
-		</code></pre>
+     }
+});</code></pre>
 		</li>
 		</ul>
 	</section>
