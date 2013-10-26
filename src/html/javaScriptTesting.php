@@ -21,11 +21,6 @@ $ROOT_VENDORS = "../../bower_components/"
 <!-- For syntax highlighting -->
 <link rel="stylesheet" href="<?=$ROOT_VENDORS?>reveal.js/lib/css/zenburn.css">
 
-<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-<script>
-document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-</script>
-
 <!--[if lt IE 9]>
 <script src="lib/js/html5shiv.js"></script>
 <![endif]-->
@@ -33,7 +28,7 @@ document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.se
 	<body>
 		<div class="reveal">
 			<div class="slides">
-			<?php include("backbonejs.html");?>
+			<?php include("javaScriptTesting.html");?>
 			</div>
 		</div>
 <script src="<?=$ROOT_VENDORS?>reveal.js/lib/js/head.min.js"></script>
