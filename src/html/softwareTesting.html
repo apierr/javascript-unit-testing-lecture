@@ -1,0 +1,365 @@
+<!-- ********************* BACKBONE PRESENTATION 01/03 ********************** -->
+<section>
+	<h2>Software Testing</h2>
+	<img class="logo" src="../images/softwareTesting.jpeg">
+	<p>
+		<small>Created by <a href="#">Antonio Pierro</a> / <a href="http://twitter.com/antonio_pierro_">@antonio_pierro_</a></small>
+	</p>
+	<aside class="notes">
+		Introduction aux tests du logiciel
+	</aside>
+</section>
+<!--SLIDE1-->
+<section>
+	<section>
+		<h2>What Is a Bug?</h2>
+		<ul>
+			<li>It is a piece of software which does not operate as intended.</li>
+			<li>People use different terms to describe what happens when software fails. Here are a few: Defect, Fault, Problem, Error, Incident, Failure...</li>
+			<li>In this tutorial, all software problems will be called bugs.</li>
+		</ul>
+
+	</section>
+	<section>
+		<h2>What Is Software Testing?</h2>
+		<p>
+			<ul>
+				<li>You write a simple calculator that just does addition.</li>
+				<li>Before you write any of the code, you know how you want it to behave. You have a <em>specification</em> for its behavior:</li>	
+				<ul>
+					<li>you make tests that added 1 and 1, 2 and 2, –1 and 5, –1.2 and 6.8, 0 and 0, and so on.</li>
+				</ul>
+				<li>If you run these tests and you see some failures, then you know that your calculator doesn't work.</li>
+				<li>It is important to know that it is difficult (and often impossible) to write tests for every case.</li>
+			</ul>
+		</p>
+	</section>
+	<section>
+		<h2>Why Is It Useful?</h2>
+		<ul>
+			<li>These tests can evaluate a program's correctness after a change.</li>
+			<li>Tests can also function as good examples for other developers.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Why Do Bugs Occur?</h2>
+		<ul>
+			<li>Most of them are not caused by programming errors.</li>
+			<li>The number one cause of software bugs is the specification.</li>
+		</ul>
+		<span>
+			<img src="../images/whyBugsOccur.png">
+		</span>
+	</section>
+
+	<section>
+		<h2>The Cost of Bugs</h2>
+		<ul>
+			<li>The figure shows an example of how the cost of fixing these bugs can grow over time.</li>
+		</ul>
+		<span>
+			<img src="../images/costOfBug.png">
+		</span>
+	</section>
+
+	<section>
+		<h2>What Exactly Does a Software Tester Do?</h2>
+		<ul>
+			<li>The goal of a software tester is to find bugs.</li>
+			<li>The goal of a software tester is to find bugs and find them as early as possible.</li>
+			<li>The goal of a software tester is to find bugs and find them as early as possible and make sure they get fixed.</li>
+			<li>It's important to note that "fixing" a bug does not necessarily imply correcting the software. It could mean adding a comment in the user manual.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>What Makes a Good Software Tester?</h2>
+		<ul>
+			<li>They are creative. Testing the obvious is not sufficient for software testers.</li>
+			<li>They are persuasive. Testers need to be good at making their points clear, demonstrating why the bug does indeed need to be fixed.</li>
+			<li>They are relentless. They will try every way possible to find it.</li>
+		</ul>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>The Realities of Software Testing</h2>
+		<ul>
+			<li>It's Impossible to Test a Program Completely</li>
+			<li>Every software project has an optimal test effort.</li>
+		</ul>
+		<img src="../images/optimalTestEffort.png">
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>Testing Fundamentals</h2>
+		<ul>
+			<li>Examining the Specification</li>
+			<li>Testing the Software with Blinders On</li>
+			<li>Examining the Code</li>
+			<li>Testing the Software with X-Ray Glasses</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Black-Box Testing</h2>
+		<ul>
+			<li>In black-box testing, the tester only knows what the software is supposed to do, he can not look in the box to see how it operates.</li>
+			<li>If he types in a certain input, he gets a certain output. He doesn't know how or why it happens, just that it does.</li>
+			<li>Black-box testing is sometimes referred to as functional testing or behavioral testing. </li>
+		</ul>
+	</section>
+	<section>
+		<h2>White-Box Testing</h2>
+		<ul>
+			<li>In white-box testing, the software tester has access to the program's code and can examine it for clues to help him with his testing, he can see inside the box. </li>
+			<li>It's very easy to become biased and fail to objectively test the software because you might tailor the tests to match the code's operation.</li>
+			<li>White-box testing is sometimes referred to as driven development testing.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Performing a High-Level Review of the Specification</h2>
+		<ul>
+			<li>Pretend to Be the Customer: The easiest thing for a tester to do when he first receives a specification for review is to pretend to be the customer.</li>
+			<li>Don't forget about software security when pretending to be the customer. </li>
+			<li>Don't forget about reading online and printed software reviews and articles about the competition.</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Low-Level Specification Test Techniques</h2>
+		<ul>
+			<li>Help assure that all the details are defined</li>
+			<li>Specification Attributes Checklist: Complete, Accurate, Precise, Consistent, Relevant, Feasible, Testable</li>
+			<li>Specification Terminology Checklist: Always, Every, All, None, Never, If…Then…</li>
+		</ul>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>Test-to-Pass and Test-to-Fail</h2>
+		<ul>
+			<li>When you test-to-pass, you really assure only that the software minimally works.
+			<ul>
+				<li>You don't push its capabilities.</li>
+				<li>You don't see what you can do to break it. </li>
+			</ul>
+			</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Testing the Boundary Edges</h2>
+		<ul style="float: left; width: 450px">
+			<li>The best way to describe boundary condition testing is shown in this figure.</li>
+			<li>If you can safely and confidently walk along the edge of a cliff without falling off, you can almost certainly walk in the middle of a field. </li>
+			<li>If software can operate on the edge of its capabilities, it will almost certainly operate well under normal conditions.</li>
+		</ul>
+		<span style="width: 450px; float: right">
+			<img src="../images/softwareBoundary.png">
+		</span>
+		
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>Examining the Code 1/2</h2>
+		<ul>
+			<li>Peer Reviews. The team reviews the code together and looks for problems and oversights.</li>
+			<li>Coding Standards and Guidelines. It's equivalent to writing words that can be understood but don't meet the grammatical rules of the English language.</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Examining the Code 2/2</h2>
+		<ul>
+			<li>Data Reference Errors. Caused by using a variable that has not been properly declared or initialized </li>
+			<li>Computation Errors. Errors which are essentially bad math.</li>
+			<li>Comparison Errors. Less than, greater than, equal, not equal, true, false.</li>
+			<li>Control Flow Errors. Is it possible that a loop never executes?</li>
+			<li>Subroutine Parameter Errors. Subroutine parameter errors are due to incorrect passing of data to and from software subroutines.</li>
+		</ul>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>Dynamic White-Box Testing</h2>
+		<ul>
+			<li>Since it's dynamic, it must be about testing a running program</li>
+			<li>Since it's white-box, it must be about looking inside the box, examining the code, and watching it as it runs.</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Dynamic White-Box Testing</h2>
+		<ul>
+			<li>You would choose different test cases if you knew that one box contained a computer and the other a person with a pencil and paper.</li>
+		</ul>
+		<img src="../images/whiteBox.png">
+	</section>
+
+	<section>
+	<h2>Unit and Integration Testing</h2>
+	<ul>
+		<li>Individual pieces of code are built up and tested separately</li>
+		<li>.... and then integrated and tested again</li>
+	</ul>
+	<img src="../images/unitIntegrationTesting.png">
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>Summary</h2>
+		<ul>
+			<li>testing encompasses many areas, including:
+			<ul>
+				<li>configuration testing</li>
+				<li>usability testing</li>
+				<li>security</li>
+				<li>localization testing (if the site is intended for a worldwide audience)</li>
+			</ul></li>
+		</ul>
+
+	</section>
+</section>
+
+<!-- #####################################################################
+####################### Website Testing ############################################## 
+#####################################################################-->
+
+<section>
+	<section>
+		<h2>Website Testing</h2>
+		<ul>
+			<li>Highlights of this chapter include
+			<ul>
+				<li>What fundamental parts of a web page need testing</li>
+				<li>What basic white-box and black-box techniques apply to web page testing</li>
+				<li>How configuration and compatibility testing apply</li>
+				<li>Why usability testing is the primary concern of web pages</li>
+				<li>How to use tools to help test your website</li>
+			</ul></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>A typical web page has many testable features.</h2>
+		<ul>
+			<li>Customizable layout that allows users to change where information is positioned onscreen</li>
+			<li>Dynamic drop-down selection boxes</li>
+			<li>Dynamic layout and optional information based on screen resolution</li>
+			<li>Compatibility with different web browsers, browser versions, and hardware and software platforms</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Black-Box Testing</h2>
+		<ul>
+			<li>The easiest place to start is by treating the web page or the entire website as a black box.
+<ul>
+	<li>Hyperlinks.  Each link should be checked to make sure that it jumps to the correct destination and opens in the correct window.</li>
+	<li>Graphics. Do all graphics load and display properly?</li>
+	<li>Forms. Are the fields the correct size? Do they accept the correct data and reject the wrong data? </li>
+	<li>Is there proper confirmation when you finally press Enter? </li>
+</ul>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>White-Box Testing</h2>
+		<ul>
+			<li>Examining the Code.</li>
+			<li>You can see the web page aa created with HTLM and JavaScript code to create extra dynamic features.
+			<li>You examine the script and view the HTML.</li>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Configuration and Compatibility Testing</h2>
+		<ul>
+			<li>Assume that you have a website to test. 
+			You need to think about what the possible hardware and software configurations might be:
+<ul>
+	<li>Hardware Platform. Mac, PC, Mobile Device...</li>
+	<li>Browser Software and Version.</li>
+	<li>Browser Options. Most web browsers allow for a great deal of customization.</li>
+	<li>Video Resolution and Color Depth. </li>
+</ul>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Usability Testing</h2>
+		<ul>
+			<li>The following list is adapted from the Top Ten Mistakes in Web Design:
+			<ul>
+				<li>Long Scrolling Pages. Users typically don't like to scroll beyond the information visible onscreen when a page comes up. </li>
+				<li>Non-Standard Link Colors. </li>
+				<li>Overly Long Download Times. Traditional human-factor guidelines indicate that 0.1 second is about the limit for users to feel that the system is reacting instantaneously. </li>
+				<li>Using Frames.</li>
+			</ul></li>
+		</ul>
+	</section>
+
+</section>
+
+
+
+
+
+<!-- #####################################################################
+####################### Test Driven Development ############################################## 
+#####################################################################-->
+
+
+<section>
+	<section>
+		<h2>Test-Driven Development</h2>
+		<ul>
+			<li>The development technique called test-driven development (TDD) works like this:</li>
+			<ul>
+				<li>Write test cases for a specific part of your code. You have not written the code yet, so all of these tests should fail!</li>
+				<li>Write your code to "fill in" the tests.</li>
+				<li>Once all of your tests pass, go back and clean up your code (this is called <em>refactoring</em>).</li>
+			</ul>
+		</ul>
+	</section>
+</section>
+
+<section>
+	<h2>Behavior-Driven Development</h2>
+	<ul>
+		<li>The development technique called Behavior-Driven Development (BDD) works like this:</li>
+		<ul>
+			<li>Your tests must be small and test one thing.</li>
+			<li>Your tests should be sentences. In the calculator example, sentences would look like 
+			"Calculator adds two positive integers".</li>		
+		</ul>
+	</ul>
+</section>
+
+<!-- #####################################################################
+####################### REFERENCES ############################################## 
+#####################################################################-->
+<section>
+	<h3>References</h3>
+	<p>
+		<ul>
+			<li><a target="_" href="#">Software Testing By Ron Patton</a></li>
+		</ul>
+	</p>
+</section>
+
+<section><h2>English to French</h2>
+<ul>
+	<li>ho evidenziato questa parola perchè è ...</li>
+</ul>
+</section>
+
