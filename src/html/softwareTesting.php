@@ -5,7 +5,7 @@ $ROOT_VENDORS = "../../bower_components/"
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>01 Backbonejs</title>
+		<title>Software Testing</title>
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 <meta name="author" content="Hakim El Hattab">
 
