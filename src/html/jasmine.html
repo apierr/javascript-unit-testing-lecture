@@ -1,0 +1,400 @@
+<!-- ********************* BACKBONE PRESENTATION 01/03 ********************** -->
+<section>
+	<h1>Jasmine - Unit Testing</h1>
+	<img class="logo" src="../images/jasmine.png">
+	<p>
+		<small>Created by <a href="#">Antonio Pierro</a> / <a href="http://twitter.com/antonio_pierro_">@antonio_pierro_</a></small>
+	</p>
+</section>
+<!--SLIDE1-->
+<section>
+	<section>
+		<h2>What is Jasmine?</h2>
+		<p>
+			<ul>
+				<li>It is a JavaScript unit testing framework.</li>
+				<li>It provides a mechanism for testing synchronous and asynchronous JavaScript code.</li>
+				<li>It is a behavior-driven development framework (focus on the business value than on the technical details)</li>
+				<li>It can be read by non-programmers and can provide a clear description when a single test succeeds or fails</li>
+			</ul>
+		</p>
+	</section>
+
+	<section>
+		<h2>Configuration</h2>
+		<ul>
+			<li>Download the framework from https://github.com/pivotal/jasmine/downloads</li>
+			<li>Unpacking jasmine-standalone-1.3.0.zip (or later)</li>
+			<li>Click on the SpecRunner.html file; you should see passing specs.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Jasmine Suite</h2>
+		<ul>
+			<li><em>Suite</em> is a group of test cases that can be used to test a specific behavior of the JavaScript code.</li>
+			<li>In Jasmine, the test suite begins with a call to the Jasmine global function <em>describe</em> with two parameters.</li>
+			<li>The first parameter represents the title of the test suite</li>
+			<li>The second parameter represents a function that implements the test suite.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Jasmine Spec</h2>
+		<ul>
+			<li>Spec represents a test case inside the test suite.</li>
+			<li>In Jasmine, a test case begins with a call to the Jasmine global function <em>it</em> with two parameters.</li>
+			<li>The first parameter represents the title of the spec.</li>
+			<li>The second parameter represents a function that implements the test case.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Jasmine test example.</h2>
+		<ul>
+			<li>The following code snippet shows an example of a Jasmine test suite and a spec with an expectation:</li>
+		</ul>
+		<pre><code>describe("A sample suite", function() {
+	it("contains a sample spec with an expectation", function() {
+		expect(true).toEqual(true);
+	});
+});</code></pre>
+	</section>
+
+	<section>
+		<h2>Writing your first Jasmine test. (SimpleMath.js)</h2>
+		<pre>
+			<code>SimpleMath = function() {
+	// TODO
+};
+
+SimpleMath.prototype.getFactorial = function (number) {
+	// TODO
+};
+
+SimpleMath.prototype.signum = function (number) {
+    // TODO
+};
+
+SimpleMath.prototype.average = function (number1, number2) {
+};</code>
+		</pre>
+		<aside class="notes"><pre><code>SimpleMath.prototype.getFactorial = function (number) {
+if (number &lt; 0) {
+	throw new Error("There is no factorial for negative numbers");
+}
+else if (number == 1 || number == 0) {
+	// If number &lt;= 1 then number! = 1.
+	return 1;
+} else {
+	return number * this.getFactorial(number-1);
+	}
+};
+
+SimpleMath.prototype.signum = function (number) {
+	if (number > 0)  {
+		return 1;
+	} else if (number == 0) {
+		return 0;
+	} else {
+		return -1;
+	}
+};
+
+SimpleMath.prototype.average = function (number1, number2) {
+	return (number1 + number2) / 2;
+}
+</code></pre></aside>
+	</section>
+
+	<section>
+		<h2>Test the calculation of the factorial</h2>
+		<pre><code>describe("SimpleMath", function() {
+  var simpleMath;
+  beforeEach(function() {
+    simpleMath = new SimpleMath();
+  });
+  describe("when SimpleMath is used to find factorial", function() {
+    it("should be able to find factorial for positive number", function() {
+      expect(simpleMath.getFactorial(3)).toEqual(6);
+    });
+    it("should be able to find factorial for zero", function() {/* TODO */});
+    it("should be able to throw an exception when the number is negative", function() { 
+      expect(function() { /* TODO */ }).toThrow("There is no factorial for negative numbers");
+￼￼￼￼});
+  });
+});</code></pre>
+	</section>
+
+	<section>
+		<h2>The signum test suite</h2>
+		<pre><code>describe("when SimpleMath is used to find signum", 
+    function() {
+        it("should be able to find the signum for a positive number", 
+            function() { expect(simpleMath.signum(3)).toEqual(1); });
+
+        it("should be able to find the signum for zero", 
+             function() {/* TODO */});
+
+        it("should be able to find the signum for a negative number", 
+             function() {/* TODO */});
+
+});</code></pre>
+	</section>
+
+	<section>
+		<h2>The average test suite</h2>
+		<pre><code>describe("when SimpleMath is used to find the average of two values", 
+	function() {
+		it("should be able to find the average of two values", 
+			function() {
+					/* TODO */
+		});
+});</code></pre>
+	</section>
+
+	<section>
+		<h2>The nested describe blocks</h2>
+		<ul>
+			<li>The following code snippet is an example of the Jasmine's nested describe blocks:</li>
+			<pre><code>describe("MyTest", function() {
+     beforeEach(function() {
+     alert("beforeEach level1");
+     });
+     describe("MyTest level2", function() {
+              beforeEach(function() {
+       alert("beforeEach level2");
+       });
+       describe("MyTest level3", function() {
+         beforeEach(function() {
+         alert("beforeEach level3");
+         });
+         it("is a simple spec in level3", function() {
+         alert("A simple spec in level3");
+         expect(true).toBe(true);
+         });
+         afterEach(function() {
+         alert("afterEach level3");
+         });
+￼      afterEach(function() {
+       alert("afterEach level2");
+       });
+     });
+     afterEach(function() {
+     alert("afterEach level1");
+     });
+});</code></pre>
+		</ul>
+	</section>
+
+</section>
+
+<section>
+	<section>
+		<h2>Jasmine matchers</h2>
+		<ul>
+			<li>In the first Jasmine example, we used the toEqual and toThrow Jasmine matchers.</li>
+			<li>The other different built-in matchers provided by Jasmine will be illustrated.</li>
+			<li>Will explain how to write a custom Jasmine matcher to have more powerful and descriptive testing code.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>The toBe matcher</h2>
+		<ul>
+			<li>The toBe matcher is passed if the actual value is of the same type and value as that of the expected value. It uses === to perform this comparison. <pre><code>describe("the toBe Matcher", function() {
+       it("should compare both types and values", function() {
+         var actual = "123";
+         var expected = "123";
+         expect(actual).toBe(expected);
+       });
+});</code></pre></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>The toBeDefined matcher</h2>
+		<ul>
+			<li>The toBeDefined matcher is used to ensure that a property or a value is define<pre><code>describe("the toBeDefined Matcher", function() {
+       it("should be able to check defined objects", function() {
+         var object = [1, 2, 3];
+         expect(object).toBeDefined();
+         }); 
+     });</code></pre></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>The toBeUndefined matcher</h2>
+		<ul><li><pre><code>describe("the toBeUndefined Matcher", function() {
+       it("should be able to check undefined objects", function() {
+var object;
+         expect(object).toBeUndefined();
+       });
+});</code></pre></li>
+<li>You can achieve the behavior of the toBeUndefined matcher by using the not
+keyword and the toBeDefined matcher<pre><code>describe("the toBeUndefined Matcher using the not keyword and the
+   toBeDefined matcher", function() {
+       it("should be able to check undefined objects", function() {
+         var object;
+         expect(object).not.toBeDefined();
+}); });</code></pre></li></ul>
+	</section>
+
+	<section>
+		<h2>The toBeNull matcher</h2>
+		<ul>
+			<li>The toBeNull matcher is used to ensure that a property or a value is null.<pre><code>describe("the toBeNull Matcher", function() {
+         it("should be able to check if an object value is null",
+         function() {
+           var object = null;
+           expect(object).toBeNull();
+         });
+});</code></pre></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>The toBeTruthy matcher</h2>
+		<ul>
+			<li>The toBeTruthy matcher is used to ensure that a property or a value is true<pre><code>describe("the toBeTruthy Matcher", function() {
+       it("should be able to check if an object value is true",
+   function() {
+   var object = true;
+  expect(object).toBeTruthy();
+  });
+  });</code></pre></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>The toBeFalsy matcher</h2>
+		<ul>
+			<li>the toBeFalsy matcher is used for ensuring that a property or a value is false.
+			<pre><code>describe("the toBeFalsy Matcher", function() {
+       it("should be able to check if an object value is false",
+   function() {
+         var object = false;
+         expect(object).toBeFalsy();
+       });
+});</code></pre></li>
+		</ul>
+	</section>	
+
+	<section>
+		<h2>The toContain matcher</h2>
+		<ul>
+			<li>The toContain matcher is used to check whether a string or array contains a substring or an item. </li>
+		</ul>
+		<pre><code>describe("the toContain Matcher", function() {
+       it("should be able to check if a String contains a specific
+       substring", function() {
+         expect("Hello World from Cairo").toContain("Cairo");
+       });
+       it("should be able to check if an Array contains a specific
+       item", function() {
+         expect(["TV", "Watch", "Table"]).toContain("Watch");
+       });
+});</code></pre>
+	</section>	
+
+	<section>
+		<h2>The toBeLessThan and toBeGreaterThan matchers</h2>
+		<ul>
+			<li>The toBeLessThan and the toBeGreaterThan matchers are used to perform the simple mathematical less-than and greater-than operations:<pre><code>describe("the toBeLessThan Matcher", function() {
+       it("should be able to perform the less than operation",
+       function() {
+         expect(4).toBeLessThan(5);
+       });
+       });
+       describe("the toBeGreaterThan Matcher", function() {
+       it("should be able to perform the greater than operation",
+       function() {
+         expect(5).toBeGreaterThan(4);
+       });
+});</code></pre></li>
+		</ul>
+	</section>	
+
+	<section>
+		<h2>The toMatch matchers</h2>
+		<ul>
+			<li>The toMatch matcher is used to check whether a value matches a string or a regular expression. 
+			<pre><code>describe("the toMatch Matcher", function() {
+       it("should be able to match the value with a regular expression",
+       function() {
+         expect(5).toMatch("[0-9]");
+       });
+});</code></pre></li>
+		</ul>
+	</section>	
+
+</section>
+
+<section>
+	<section>
+		<h2>Developing custom Jasmine matchers</h2>
+		<ul>
+			<li>Jasmine enables you to develop custom matchers to have more powerful and descriptive testing code.</li>
+		</ul>
+	</section>
+	
+</section>
+
+<section>
+	<section>
+		<h2>Testing asynchronous (Ajax) JavaScript code</h2>
+	</section>
+
+	<section>
+		<h2>The runs() function</h2>
+	</section>
+
+	<section>
+		<h2>The waits() function</h2>
+	</section>
+
+	<section>
+		<h2>The waitsFor() function</h2>
+	</section>
+
+	<section>
+		<h2>The spyOn() function</h2>
+	</section>
+
+</section>
+
+<section>
+
+	<section>
+		<h2>HTML fixtures</h2>
+	</section>
+
+	<section>
+		<h2>Configuring the jasmine-jquery plugin</h2>
+	</section>
+
+	<section>
+		<h2>The loadFixtures module</h2>
+	</section>
+
+</section>
+
+<!-- #####################################################################
+####################### REFERENCES ############################################## 
+#####################################################################-->
+<section>
+	<h3>References</h3>
+	<p>
+		<ul>
+			<li><a target="_" href="http://developpementagile.com/posts/2013/may/tests-javascript-avec-jasmine-partie-1">TESTS JAVASCRIPT AVEC JASMINE - PARTIE 1 : TESTER LE CODE OUBLIÉ</a></li>
+		</ul>
+	</p>
+</section>
+
+<section><h2>English to French</h2>
+<ul>
+	<li>devrait etre capable de trouver</li>
+</ul>
+</section>
+
