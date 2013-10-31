@@ -3,3 +3,6 @@
 	border: none;
 	box-shadow: none;
 }
+.reveal h1, .reveal h2, .reveal h3 {
+	text-transform: none;
+}
