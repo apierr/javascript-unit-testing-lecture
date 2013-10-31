@@ -1,0 +1,359 @@
+<!-- ********************* BACKBONE PRESENTATION 01/03 ********************** -->
+<section>
+	<h1>QUnit</h1>
+	<img class="logo" src="../images/qunit.gif">
+	<p>
+		<small>Created by <a href="#">Antonio Pierro</a> / <a href="http://twitter.com/antonio_pierro_">@antonio_pierro_</a></small>
+	</p>
+</section>
+<!--SLIDE1-->
+<section>
+	<section>
+		<h2>What Is QUnit?</h2>
+		<p>
+			<ul>
+				<li>It is a powerful JavaScript test suite.</li>
+				<li>It is used by many large open-source projects (such as jQuery and Backbone.js) to test their code.</li>
+				<li>It can be combined with third-party solutions such as SinonJS to produce an even more powerful testing solution supporting spies and mocks.</li>
+			</ul>
+		</p>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>Configuration of QUnit Test</h2>
+		<p>
+		We first setup a testing environment composed of three files:</p>
+		<ol>
+			<li>A HTML structure for displaying test results</li>
+			<li>The qunit.js file composing the testing framework</li>
+			<li>The qunit.css file for styling test results.</li>
+
+		</ol>
+		<p>The latter two of these can be downloaded from http://qunitjs.com/</p>
+		
+	</section>
+
+	<section>
+	<h2>HTML structure for displaying test results</h2>
+		<pre><code>&lt;!DOCTYPE HTML>&lt;html>
+&lt;head>
+	&lt;title>My first QUnit test suite&lt;/title>
+	&lt;link rel="stylesheet" type="text/css" href="YOUR_QUNIT_CSS">
+	&lt;script type="text/javascript" src="YOUR_QUNIT_JS">&lt;/script>
+	&lt;script type="text/javascript" src="YOUR_APP_JS">&lt;/script>
+	&lt;script type="text/javascript" src="YOUR_TEST_JS">&lt;/script>
+&lt;/head>
+	&lt;h1 id="qunit-header">QUnit Test Suite&lt;/h1>
+	&lt;h2 id="qunit-banner">&lt;/h2>
+	&lt;div id="qunit-testrunner-toolbar">&lt;/div>
+	&lt;h2 id="qunit-userAgent">&lt;/h2>
+	&lt;ol id="qunit-tests">test markup, hidden.&lt;/ol>
+&lt;/body>
+&lt;/html></code>
+		</pre>
+	</section>
+
+	<section>
+		<h2>Writing your first QUnit test. (My_app.js)</h2>
+		<pre>
+			<code>SimpleMath = function() {
+	// TODO
+};
+
+SimpleMath.prototype.getFactorial = function (number) {
+	// TODO
+};
+
+SimpleMath.prototype.signum = function (number) {
+    // TODO
+};
+
+SimpleMath.prototype.average = function (number1, number2) {
+};</code>
+		</pre>
+		<aside class="notes"><pre><code>SimpleMath.prototype.getFactorial = function (number) {
+if (number < 0) {
+	throw new Error("There is no factorial for negative numbers");
+}
+else if (number == 1 || number == 0) {
+	// If number <= 1 then number! = 1.
+	return 1;
+} else {
+	return number * this.getFactorial(number-1);
+	}
+};
+
+SimpleMath.prototype.signum = function (number) {
+	if (number > 0)  {
+		return 1;
+	} else if (number == 0) {
+		return 0;
+	} else {
+		return -1;
+	}
+};
+
+SimpleMath.prototype.average = function (number1, number2) {
+	return (number1 + number2) / 2;
+}
+</code></pre></aside>
+	</section>
+
+	<section>
+		<h2>Writing your first QUnit test. (Your_spec.js)</h2>
+		<pre><code>module("Factorial", {
+	setup: function() {
+		this.simpleMath = new SimpleMath();
+	}, teardown: function() {
+		delete this.simpleMath;
+	}
+});
+
+test("calculating factorial for a positive number", function() {
+	equal(this.simpleMath.getFactorial(3), 6, "Factorial of three  must equal six");
+});
+
+test("calculating factorial for zero", function() { /* TODO */ });
+
+test("throwing an error when calculating the factorial for a negative number", function() {
+	raises(function(){/* TODO */ }, "There is no factorial for negative numbers");
+});
+
+     </code></pre>
+     <aside class="notes"><pre><code>test("calculating factorial for zero", function() {
+	equal(this.simpleMath.getFactorial(0), 1, "Factorial of zero must equal one");
+});
+     	
+test("throwing an error when calculating the factorial for a negative number", function() {
+	raises(function() {
+		this.simpleMath.getFactorial(-10);
+	}, "There is no factorial for negative numbers");
+});
+     </code></pre>
+
+     </aside>
+	</section>
+	<section>
+		<h2></h2>
+		<pre><code>module("Signum", {
+	setup: function() {
+		this.simpleMath = new SimpleMath();
+	}, teardown: function() {
+		delete this.simpleMath;
+	}
+});
+
+test("calculating signum for a positive number", function() {
+	// TODO
+});
+test("calculating signum for zero", function() {
+	// TODO
+});
+test("calculating signum for a negative number", function() {
+	// TODO
+});
+</code></pre>
+<aside class="notes">test("calculating signum for a positive number", function() {
+	equal(this.simpleMath.signum(3), 1, "Signum of three must equal one");
+});
+test("calculating signum for zero", function() {
+	equal(this.simpleMath.signum(0), 0, "Signum of zero must equal zero");
+});
+test("calculating signum for a negative number", function() {
+	equal(this.simpleMath.signum(-1000), -1, "Signum of -1000 must equal -1");
+});</aside>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>Assertions</h2>
+		<ul>
+			<li>An assertion is a function that validates a condition</li>
+			<li>If the condition is not valid; it throws an error that causes the test function to fail. </li>
+			<li>In the first QUnit test example, we used the QUnit equal and raises assertions.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>The ok assertion</h2>
+		<ul>
+			<li>The ok assertion takes two parameters.</li>
+			<li>The first parameter is a condition. (4 == 4)</li>
+			<li>The second parameter is optional and represents the message that is to be displayed with the test.</li>
+		</ul>
+		<pre><code>ok(4==4, "4 must equal 4");</code></pre>
+	</section>
+
+	<section>
+		<h2>The equal and notEqual assertions</h2>
+		<ul>
+			<li>The equal assertion has three parameters:
+			<ul>
+				<li>the first two parameters represent the actual and expected values</li>
+				<li>the third parameter is optional and represents the message that is to be displayed with the test.</li>
+			</ul>
+			<pre><code>equal(5, "5", "5 should equal '5'...");
+notEqual(5, 6, "5 should not equal 6...");</code></pre></li>
+
+			<li>It is very important to know that the equal and notEqual assertions use the JavaScript == operator in order to perform the comparison.</li>
+		</ul>
+	</section>
+	<section>
+		<h2>The deepEqual and notDeepEqual assertions</h2>
+		<ul>
+			<li>It makes a deep comparison (recursively) between objects, arrays, and primitive datatypes.</li>
+			<li>The deepEqual assertion uses the === operator to perform
+the comparison (it does not ignore the types).</li>
+		</ul>
+		<pre><code>// Objects comparison
+var object1 = {a:1, b:2, c : {c1: 11, c2: 12}};
+var object2 = {a:1, b:2, c : {c1: 11, c2: 12}};
+var object3 = {a:1, b:"2", c : {c1: 11, c2: 12}};
+deepEqual(object1, object2, "object1 should equal object2");
+notDeepEqual(object1, object3, "object1 should not equal object3");
+
+// Primitive comparison
+deepEqual(1, 1, "1 === 1");
+notDeepEqual(1, "1", "1 !== '1'");</code></pre>
+	</section>
+	<section><h2>The expect assertion</h2>
+	<ul><li>the following test function will fail
+	<pre><code>test("test function1", function() {
+	expect(3);
+	equal(1, 1);
+});</code></pre></li>
+<li>If we insert the third assertion, the test function passes, as follows:
+<pre><code>test("test function1", function() {
+	expect(3);
+	ok(true);
+	equal(1, 1);
+	deepEqual("1", "1");
+});</code></pre></li>
+<li>The expectation count can be passed as the second parameter to the test function, as follows:<pre><code>test("test function1", 3, function() { .. });</code></pre></li></ul></section>
+
+<section>
+	<h2>Developing custom QUnit assertions 1/2</h2>
+	<ul>
+		<li>In order to define a custom assertion in QUnit, you should use the QUnit.push API.</li>
+		<li>The QUnit.push API has the following parameters:<ul>
+			<li>result: If it is set to true, this means that the test succeeds, and if it is set to false, this means that the test fails</li>
+			<li>actual: It represents the actual value</li>
+			<li>expected: It represents the expected value</li>
+			<li>message: It represents the message that is to be displayed with the test function</li>
+		</ul></li>
+	</ul>
+</section>
+
+<section>
+	<h2>Developing custom QUnit assertions 2/2</h2>
+	<ul>
+		<li>The following code snippet shows the sum custom assertion code:<pre><code>function sum(number1, number2, result, message) {
+	var expected = number1 + " + " + number2 + " = " + result;
+	var actual = expected;
+	if ((number1 + number2) != result) {
+		 actual = number1 + " + " + number2 + " != " + result;
+	}
+	QUnit.push((number1 + number2) == result, actual, expected, message); 
+}</code></pre></li>
+<li>You can use it as in the following code snippet:<pre><code>sum(30, 20, 50, "50 = 30 + 20");</code></pre></li>
+	</ul>
+</section>
+
+</section>
+
+<!-- #####################################################################
+########### Testing asynchronous (Ajax) JavaScript code ################# 
+#####################################################################-->
+
+<section>
+	<section>
+		<h2>Testing asynchronous (Ajax) JavaScript code</h2>
+		<ul>
+			<li>In order to perform real Ajax testing QUnit provides two main APIs:
+			<ul>
+				<li>stop()</li>
+				<li>start()</li>
+			</ul></li> 
+			</ul>
+	</section>
+
+	<section>
+		<h2>The stop and start APIs</h2>
+		<ul>
+			<li>The stop() API stops the QUnit test runner until the start() API is called or the test function is timed out. <pre><code>QUnit.config.testTimeout = 5000; /* test function timeout */
+
+test("test function1", function() {
+    stop();
+    window.setTimeout(function() {
+       ok(true);
+       start();
+    }, 3000); 
+});</code></pre></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>AsyncTest function</h2>
+		<ul>
+			<li>instead of explicitly calling the stop() API in the test method:
+<pre><code>asyncTest("test function2", function() {
+     window.setTimeout(function() {
+		ok(true);
+       	start();
+     }, 1000);
+});</code></pre>
+</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Create a real Ajax test</h2>
+		<pre><code>asyncTest("Making a REAL Ajax testing", function() {
+
+    var successCallback = function(response) {
+        var resultMessage = response.xmlhttp.responseText;
+        // Validate the result message using the QUnit assertions.
+        start(); 
+    };
+
+    var failureCallback = function() {
+        ok(false, "MUST fail");
+        start();
+    };
+
+    asyncSystem.doAjaxOperation(inputData, successCallback,failureCallback);
+
+});</code></pre>
+	</section>
+</section>
+
+
+<section>
+	<h2>Summary</h2>
+	<ul>
+		<li>You learned what QUnit is and how to use it for testing synchronous JavaScript code.</li>
+		<li>You learned how to test asynchronous (Ajax) JavaScript code using the QUnit test and QUnit asyncTest mechanisms.</li>
+		<li>You learned the assertions provided by the framework, and how to develop your own assertion in order to simplify your test code.</li>
+	</ul>
+</section>
+<!-- #####################################################################
+####################### REFERENCES ############################################## 
+#####################################################################-->
+<section>
+	<h3>References</h3>
+	<p>
+		<ul>
+			<li><a target="_" href="http://developpementagile.com/posts/2013/may/tests-javascript-avec-jasmine-partie-1">TESTS JAVASCRIPT AVEC JASMINE - PARTIE 1 : TESTER LE CODE OUBLIÉ</a></li>
+		</ul>
+	</p>
+</section>
+
+<section><h2>English to French</h2>
+<ul>
+	<li>By default</li>
+</ul>
+</section>
+
