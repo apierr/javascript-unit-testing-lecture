@@ -336,7 +336,45 @@ keyword and the toBeDefined matcher<pre><code>describe("the toBeUndefined Matche
 		<h2>Developing custom Jasmine matchers</h2>
 		<ul>
 			<li>Jasmine enables you to develop custom matchers to have more powerful and descriptive testing code.</li>
+			<li>In order to define a custom matcher in Jasmine, you should use the <em>addMatchers</em> API to define the matcher(s) passing an object parameter to the API.</li>
+			<pre><code>this.addMatchers({ 
+	your_matcher: function (par1, par2) {
+		this.actual = par1 + par2;
+	}
+});</code></pre>
+			<li>The definition of the matchers can be placed in either the beforeEach or the it block.</li>
 		</ul>
+	</section>
+
+	<section>
+		<h2>Exercise 1: Developing custom Jasmine matchers</h2>
+		<ul>
+			<li>Create the toBePrimeNumber matcher in order to check if the actual number  is a prime number.</li>
+			<li class="fragment"><pre><code>this.addMatchers({
+	toBePrimeNumber: function(num) {
+
+	  for (var i = 2; i &lt; this.actual; ++i) {
+	    if (this.actual % i == 0) {
+	      return false;
+	    }
+	  }
+
+	  return true;
+	}
+});</code></pre></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Exercise 2: Developing custom Jasmine matchers</h2>
+		<ul>
+			<li>Create the toBeSumOf matcher which is able to check if the sum of its two arguments is equal to the actual number</li>
+		</ul>
+		<pre class="fragment"><code>this.addMatchers({
+	toBeSumOf: function (firstNumber, secondNumber) {
+		return this.actual == firstNumber + secondNumber;
+	}
+});</code></pre>
 	</section>
 	
 </section>
@@ -395,6 +433,7 @@ keyword and the toBeDefined matcher<pre><code>describe("the toBeUndefined Matche
 <section><h2>English to French</h2>
 <ul>
 	<li>devrait etre capable de trouver</li>
+	<li>Nombre premier. (7 est un nombre premier car il admet exactement deux diviseurs positifs distincts.)</li>
 </ul>
 </section>
 
