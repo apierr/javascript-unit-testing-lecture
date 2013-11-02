@@ -1,0 +1,5 @@
+*.sublime-workspace
+.DS_Store
+bower_components/
+src/html/plugin
+src/pdf/
