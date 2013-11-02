@@ -376,28 +376,181 @@ keyword and the toBeDefined matcher<pre><code>describe("the toBeUndefined Matche
 	}
 });</code></pre>
 	</section>
+
+	<section>
+		<h2>Jasmine matchers in action.</h2>
+		<pre><code>describe("Testing toBeSumOf custom matcher", function() {
+  it("should be able to calculate the sum of two numbers",
+  function() {
+    expect(10).toBeSumOf(7, 3);
+  });
+});
+
+describe("Testing toBePrimeNumber custom matcher", function() {
+        it("should be able to know prime number", function() {
+         expect(13).toBePrimeNumber();
+       });
+       it("should be able to know non-prime number", function() {
+         expect(4).not.toBePrimeNumber();
+}); });</code></pre>
+	</section>
 	
 </section>
 
 <section>
 	<section>
 		<h2>Testing asynchronous (Ajax) JavaScript code</h2>
+		<ul>
+			<li>Jasmine includes powerful functions (runs(), waits(), and waitsFor()) for performing real Ajax testing (it requires the backend server to be up and running).</li>
+			<li>Jasmine provides a mechanism for making fake Ajax testing (it does not require the availability of the backend server in order to complete the Ajax tests).</li>
+		</ul>
 	</section>
 
 	<section>
 		<h2>The runs() function</h2>
+		<ul>
+			<li>The code inside the runs() block runs directly as if it were outside the block.</li>
+			<li>If you have multiple runs() blocks in your spec, they will run sequentially.</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>The runs() function (example)</h2>
+		<pre><code>describe("Testing runs blocks", function() {
+       it("should work correctly", function() {
+           runs(function() {
+               this.x = 1;
+               expect(this.x).toEqual(1);
+           });
+           runs(function() {
+               this.x++;
+               expect(this.x).toEqual(2);
+           });
+           runs(function() {
+               this.x = this.x * 4;
+               expect(this.x).toEqual(8);
+           });
+       }); 
+});</code></pre>
 	</section>
 
 	<section>
 		<h2>The waits() function</h2>
+		<ul>
+			<li>The waits() function pauses the execution of the next block until its timeout period parameter is passed</li>
+		</ul>
+		<pre><code>describe("Testing waits with runs blocks", function() {
+  it("should work correctly", function() {
+
+    runs(function() {
+      this.x = 1;
+      var localThis = this;
+      window.setTimeout(function() {
+        localThis.x += 99;
+      }, 500); 
+    });
+
+    runs(function() {
+      expect(this.x).toEqual(1);
+    });
+
+    waits(1000);
+
+    runs(function() {
+      expect(this.x).toEqual(100);
+    });
+
+  });
+
+});</code></pre>
 	</section>
 
 	<section>
 		<h2>The waitsFor() function</h2>
+		<ul>
+			<li>The waitsFor() function provides a more powerful interface that can pause the execution of the next block until its provided function returns true or a specific timeout period passes.</li>
+		</ul>
+		<pre><code>describe("Testing waitsFor with runs blocks", function() {
+  it("should work correctly", function() {
+
+    runs(function() {
+      this.x = 1;
+      var localThis = this;
+      window.setTimeout(function() {
+        localThis.x += 99;
+      }, 500); 
+    });
+
+    runs(function() {
+      expect(this.x).toEqual(1);
+    });
+
+    // waits(1000);
+
+    waitsFor(function() {
+         return this.x == 100;
+       }, "Something wrong happens, it should not wait all of this time", 5000);
+
+    runs(function() {
+      expect(this.x).toEqual(100);
+    });
+
+  });
+
+});</code></pre>
+	</section>
+
+	<section>
+		<h2>The createSpy() function</h2>
+		<ul><li>The createSpy() API is used to replace the Ajax callbacks with the spies for making a complete real Ajax testing. </li></ul>
+		<pre><code>describe("when waitsFor is used for testing real Ajax requests", function() {
+  
+  it("should do this very well with the Jasmine Spy", function() {
+    
+    var successCallBack = jasmine.createSpy();
+    var failureCallBack = jasmine.createSpy();
+    asyncSystem.doAjaxOperation(inputData, successCallBack, failureCallBack);
+    
+    waitsFor(function() {
+      return successCallBack.callCount > 0;
+    }, "operation never completed", 10000);
+
+    runs(function() {
+      expect(successCallBack).toHaveBeenCalled();
+      expect(failureCallBack).not.toHaveBeenCalled();
+    }); 
+
+  });
+
+});</code></pre>
 	</section>
 
 	<section>
 		<h2>The spyOn() function</h2>
+		<ul>
+		<li>Is it possible to mock the Ajax testing in Jasmine?</li>
+		<li class="fragment">The answer to this question is yes. The Ajax fake testing can be simulated using the Jasmine spyOn() function</li>
+		</ul>
+		<pre class="fragment"><code>describe("when making a fake Ajax testing", function() {
+  
+  it("should be done the Jasmine Spy and the andCallFake function", function() {
+  
+    var inputData = {};
+    var successCallBack = jasmine.createSpy();
+    var failureCallBack = jasmine.createSpy();
+    var successFakeData = "Succcess Fake Data ...";
+
+    spyOn(asyncSystem, 'doAjaxOperation')
+          .andCallFake(function(inputData, successCallBack, failureCallBack) {
+      successCallBack(successFakeData);
+    });
+
+    asyncSystem.doAjaxOperation(inputData, successCallBack, failureCallBack);
+    expect(successCallBack).toHaveBeenCalled();
+    expect(failureCallBack).not.toHaveBeenCalled();
+    
+  });
+});</code></pre>
 	</section>
 
 </section>
@@ -406,14 +559,21 @@ keyword and the toBeDefined matcher<pre><code>describe("the toBeUndefined Matche
 
 	<section>
 		<h2>HTML fixtures</h2>
+		<ul>
+			<li>HTML fixtures are the input HTML code that is needed for executing one or
+more tests that require manipulating DOM elements.</li>
+			<li><em>jasmine-jquery</em> plugin provides an API for handling HTML fixtures in the specs.</li>
+		</ul>
 	</section>
 
 	<section>
 		<h2>Configuring the jasmine-jquery plugin</h2>
+		TODO
 	</section>
 
 	<section>
 		<h2>The loadFixtures module</h2>
+		TODO
 	</section>
 
 </section>
@@ -434,6 +594,9 @@ keyword and the toBeDefined matcher<pre><code>describe("the toBeUndefined Matche
 <ul>
 	<li>devrait etre capable de trouver</li>
 	<li>Nombre premier. (7 est un nombre premier car il admet exactement deux diviseurs positifs distincts.)</li>
+	<li>au lieu de</li>
+	<li>une fonction qui calcule</li>
+	<li>une fonction qui ait</li>
 </ul>
 </section>
 
