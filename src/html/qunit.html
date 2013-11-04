@@ -568,32 +568,29 @@ If you get the expected value the test should be ok, otherwise it should fail.</
 	</section>
 	<section>
 		<h2>Solution 1</h2>
-		<pre><code>
-var isSorted = function (array) {
-	QUnit.push(_.every(array, function(value, index, array) {
-         return index === 0 || String(array[index - 1]) <= String(value);
-	}));
+		<pre><code>var isSorted = function (array) {
+    QUnit.push(_.every(array, function(value, index, array) {
+        return index === 0 || String(array[index - 1]) <= String(value);
+    }));
 };
 
 test('check test', function () {
-	isSorted([1,6,4]);
+    isSorted([1,6,4]);
 });</code></pre>
 	</section>
 	<section>
 		<h2>Solution 2</h2>
 		<pre><code>asyncTest("Making a REAL Ajax testing", function() {
 
-	$.ajax(
-	   {
-			type:'GET',
-			url:'../php/json_data_combo.php',
-			dataType: 'json',
-			success: function(response) {
-				equal(response['surname'], 'pierro2', 'asynchronous PASS!');
-				start();
-			}
-	   }
-	);
+    $.ajax({
+        type:'GET',
+        url:'../php/json_data_combo.php',
+        dataType: 'json',
+        success: function(response) {
+            equal(response['surname'], 'pierro2', 'asynchronous PASS!');
+            start();
+        }
+    });
 
 });</code></pre>
 	</section>
