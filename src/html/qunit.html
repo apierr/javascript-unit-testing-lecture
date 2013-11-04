@@ -100,7 +100,7 @@ test( 'another test', function() {} );</code></pre>
 	<section>
 		<h2>Using setup() and teardown()</h2>
 		<ul>
-			<li>You can add <em>setup()</em> and <em>teardown()</em> callbacks to the modules, 
+			<li>You can add <em>setup()</em> and <em>teardown()</em> callbacks to the modules,
 			where setup() is run before each test whilst teardown() is run after each test.</li>
 		</ul>
 		<pre class="fragment"><code>module( 'Module One', { 
@@ -109,10 +109,10 @@ test( 'another test', function() {} );</code></pre>
     },
     teardown: function() {
         // run after
-    } 
+    }
 });
 
-test('first test', function() { 
+test('first test', function() {
     // run the first test
 });</code></pre>
 	</section>
@@ -553,4 +553,48 @@ if ($name === 'antonio') {
 		<li>You learned how to test asynchronous (Ajax) JavaScript code using the QUnit test and QUnit asyncTest mechanisms.</li>
 		<li>You learned the assertions provided by the framework, and how to develop your own assertion in order to simplify your test code.</li>
 	</ul>
+</section>
+
+<section>
+	<section>
+		<h2>Exercises</h2>
+		<ol>
+			<li>By using the underscore.every function http://underscorejs.org/#every define the isSorted assertion in QUnit.
+The isSorted assertion returns true if the array is sorted,
+false if it is not sorted.</li>
+			<li>Write a test to check the value retrieved from an ajax call.
+If you get the expected value the test should be ok, otherwise it should fail.</li>
+		</ol>
+	</section>
+	<section>
+		<h2>Solution 1</h2>
+		<pre><code>
+var isSorted = function (array) {
+	QUnit.push(_.every(array, function(value, index, array) {
+         return index === 0 || String(array[index - 1]) <= String(value);
+	}));
+};
+
+test('check test', function () {
+	isSorted([1,6,4]);
+});</code></pre>
+	</section>
+	<section>
+		<h2>Solution 2</h2>
+		<pre><code>asyncTest("Making a REAL Ajax testing", function() {
+
+	$.ajax(
+	   {
+			type:'GET',
+			url:'../php/json_data_combo.php',
+			dataType: 'json',
+			success: function(response) {
+				equal(response['surname'], 'pierro2', 'asynchronous PASS!');
+				start();
+			}
+	   }
+	);
+
+});</code></pre>
+	</section>
 </section>
