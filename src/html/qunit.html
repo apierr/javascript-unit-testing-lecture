@@ -67,6 +67,57 @@
 	</section>
 
 	<section>
+		<h2>QUnit test exmaple</h2>
+		<ul>
+			<li>Creating new test can be done using <em>test()</em> in this way
+			<pre><code>test( name, callback )</code></pre></li>
+		</ul>
+		<pre class="fragment"><code>var myString = 'Hello Backbone.js';
+test( 'Our first QUnit test - asserting results', function(){
+    // ok( boolean, message )
+    ok( true, 'the test succeeds');
+    ok( false, 'the test fails');
+    // equal( actualValue, expectedValue, message )
+    equal( myString, 'Hello Backbone.js', 'The value expected is Hello Backbone.js!');
+});</code></pre>
+	</section>
+
+	<section>
+		<h2>Adding structure to assertions</h2>
+		<ul>
+			<li><em>module()</em> is a method that allows us to easily group tests together. </li>
+			<li>A typical approach to grouping might be keeping multiple tests testing a specific method as part of the same group (module).</li>
+		</ul>
+		<pre class="fragment"><code>module( 'Module One' );
+test( 'first test', function() {} );
+test( 'another test', function() {} );
+
+module( 'Module Two' );
+test( 'second test', function() {} );
+test( 'another test', function() {} );</code></pre>
+	</section>
+
+	<section>
+		<h2>Using setup() and teardown()</h2>
+		<ul>
+			<li>You can add <em>setup()</em> and <em>teardown()</em> callbacks to the modules, 
+			where setup() is run before each test whilst teardown() is run after each test.</li>
+		</ul>
+		<pre class="fragment"><code>module( 'Module One', { 
+    setup: function() {
+        // run before
+    },
+    teardown: function() {
+        // run after
+    } 
+});
+
+test('first test', function() { 
+    // run the first test
+});</code></pre>
+	</section>
+
+	<section>
 		<h2>Writing your first QUnit test. (my_app.js)</h2>
 		<pre>
 			<code>SimpleMath = function() {
@@ -352,7 +403,7 @@ notDeepEqual(1, "1", "1 !== '1'");</code></pre>
 	<ul>
 		<li>Make a custom assertion to check whether a Number is Prime or Not:</li>
 	</ul>
-	<pre><code>var isPrime = function (number) {
+	<pre class="fragment"><code>var isPrime = function (number) {
 	if (number &lt; 2) {
 		return false;
 	}
@@ -370,7 +421,7 @@ notDeepEqual(1, "1", "1 !== '1'");</code></pre>
 
 <section>
 	<h2>Solution: custom QUnit assertions</h2>
-	<pre><code>var isPrime = function (number, message){
+	<pre class="fragment"><code>var isPrime = function (number, message){
 	var expected = true;
 	if (number &lt; 2) {
 		QUnit.push(false, false, expected, message);
@@ -446,7 +497,7 @@ test("test function1", function() {
 		<pre><code>asyncTest("Making a REAL Ajax testing", function() {
 
     var successCallback = function(response) {
-        var resultMessage = response.xmlhttp.responseText;
+        var resultMessage = response;
         // Validate the result message using the QUnit assertions.
         start(); 
     };
@@ -456,7 +507,7 @@ test("test function1", function() {
         start();
     };
 
-    asyncSystem.doAjaxOperation(inputData, successCallback,failureCallback);
+    doAjaxOperation(inputData, successCallback,failureCallback);
 
 });</code></pre>
 	</section>
@@ -503,21 +554,3 @@ if ($name === 'antonio') {
 		<li>You learned the assertions provided by the framework, and how to develop your own assertion in order to simplify your test code.</li>
 	</ul>
 </section>
-<!-- #####################################################################
-####################### REFERENCES ############################################## 
-#####################################################################-->
-<section>
-	<h3>References</h3>
-	<p>
-		<ul>
-			<li><a target="_" href="http://developpementagile.com/posts/2013/may/tests-javascript-avec-jasmine-partie-1">TESTS JAVASCRIPT AVEC JASMINE - PARTIE 1 : TESTER LE CODE OUBLIÉ</a></li>
-		</ul>
-	</p>
-</section>
-
-<section><h2>English to French</h2>
-<ul>
-	<li>By default</li>
-</ul>
-</section>
-
