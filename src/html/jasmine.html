@@ -67,9 +67,9 @@
 			<li>The following code snippet shows an example of a Jasmine test suite and a spec with an expectation:</li>
 		</ul>
 		<pre><code>describe("A sample suite", function() {
-	it("contains a sample spec with an expectation", function() {
-		expect(true).toEqual(true);
-	});
+    it("contains a sample spec with an expectation", function() {
+        expect(true).toEqual(true);
+    });
 });</code></pre>
 	</section>
 
@@ -124,16 +124,12 @@ SimpleMath.prototype.average = function (number1, number2) {
 		<pre><code>describe("SimpleMath", function() {
   var simpleMath;
   beforeEach(function() {
-    simpleMath = new SimpleMath();
+    // TODO create an istance of simpleMath
   });
   describe("when SimpleMath is used to find factorial", function() {
-    it("should be able to find factorial for positive number", function() {
-      expect(simpleMath.getFactorial(3)).toEqual(6);
-    });
-    it("should be able to find factorial for zero", function() {/* TODO */});
-    it("should be able to throw an exception when the number is negative", function() { 
-      expect(function() { /* TODO */ }).toThrow("There is no factorial for negative numbers");
-￼￼￼￼});
+    // TODO should be able to find factorial for positive number",
+    // TODO should be able to find factorial for zero"
+    // TODO should be able to throw an exception when the number is negative"
   });
 });</code></pre>
 	</section>
@@ -199,6 +195,235 @@ SimpleMath.prototype.average = function (number1, number2) {
 		</ul>
 	</section>
 
+</section>
+
+<section>
+	<section>
+		<h2>Jasmine with RequireJS </h2>
+		<ul>
+			<li>File organization. Assume the following directories and file organization.
+		<pre>
+.-- index.html
+|-- indexSpec.html
+|-- src
+|   |-- utils
+|   |   `-- simpleMath.js
+|-- vendors
+`-- specs
+    |-- app.js
+    |-- main.js
+    |-- utils
+    |   `-- simpleMath.spec.js
+    |-- models
+    |   `-- person.spec.js
+    |-- collections
+    |   `-- persons.spec.js
+    |-- views
+    |   |-- mainView.spec.js
+    |   `-- mainView.spec.js
+    </pre></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>indexSpec.html</h2>
+		<pre>
+			<code>&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+    &lt;meta charset="UTF-8" />
+    &lt;title>JavaScript Unit Testing Exercises&lt;/title>
+    &lt;link rel="stylesheet" type="text/css" href="??????jasmine.css">
+
+&lt;/head>
+&lt;body>
+    &lt;script data-main="spec/main" src="???????require.js">&lt;/script>
+&lt;/body>
+&lt;/html></code>
+		</pre>
+	</section>
+
+	<section>
+		<h2>spec/main.js</h2>
+		<pre><code>/*global require*/
+(function () {
+    'use strict';
+
+    require.config({
+        paths: {
+            // TODO
+        },
+        shim: {
+            // TODO 
+        }
+    });
+
+    require([/* TODO */], function (app) {
+        // TODO
+    });
+}());
+</code></pre>
+	</section>
+
+	<section>
+		<h2>spec/main.js solution</h2>
+		<pre><code>/*global require*/
+(function () {
+    'use strict';
+    
+    var jasmineDir = '../../../bower_components/jasmine/lib/jasmine-core/';
+
+    require.config({
+        paths: {
+            jasmine: jasmineDir + 'jasmine',
+            jasmineHtml: jasmineDir + 'jasmine-html'
+        },
+        shim: {
+            jasmineHtml: {
+                deps: ['jasmine']
+            },
+            jasmine: {
+                exports: 'jasmine'
+            }
+        }
+    });
+
+    require([
+        'app'
+    ], function (app) {
+        app.start();
+    });
+}());
+</code></pre>
+	</section>
+
+	<section>
+		<h2>spec/app.js</h2>
+		<pre><code>/*global define, window, setTimeout*/
+(function () {
+    'use strict';
+    define([
+        // TODO 
+    ], function (jasmine) {
+
+        var initialize = function () {
+            // TODO
+        };
+
+        return {
+            start: initialize
+        };
+    });
+}());</code></pre>
+	</section>
+
+	<section>
+		<h2>spec/app.js solution</h2>
+		<pre><code>/*global define, window, setTimeout*/
+(function () {
+    'use strict';
+    define([
+        'jasmine',
+        'jasmineHtml',
+        'simpleMath.spec'
+    ], function (jasmine) {
+
+        var initialize = function () {
+
+            var jasmineEnv = jasmine.getEnv();
+
+            jasmineEnv.updateInterval = 1000;
+
+            var trivialReporter = new jasmine.TrivialReporter();
+
+            jasmineEnv.addReporter(trivialReporter);
+
+            jasmineEnv.specFilter = function(spec) {
+
+                return trivialReporter.specFilter(spec);
+            };
+
+            var currentWindowOnload = window.onload;
+
+            setTimeout(function () {
+                if (currentWindowOnload) {
+                    currentWindowOnload();
+                }
+                execJasmine();
+            }, 0);
+
+            function execJasmine() {
+                jasmineEnv.execute();
+            }
+
+        };
+
+        return {
+            start: initialize
+        };
+    });
+}());
+</code></pre>
+	</section>
+
+	<section>
+		<h2>spec/utils/simpleMath.spec.js</h2>
+		<pre><code>describe("SimpleMath", function() {
+
+    var simpleMath;
+
+    beforeEach(function() {
+       simpleMath = new SimpleMath;
+
+    });
+
+    describe("when SimpleMath is used to find the average of two values", function() {
+
+        it("should be able to find the average of two values", function() {
+
+            expect(simpleMath.average(3, 6)).toEqual(4.5);
+
+        });
+    });
+
+});</code></pre>
+	</section>
+
+	<section>
+		<h2>spec/utils/simpleMath.spec.js solution</h2>
+		<pre><code>/*global require, define, describe, beforeEach, it, expect, sinon, spyOn*/
+(function () {
+    'use strict';
+    define([
+        'jasmine',
+        '../js/SimpleMath'
+    ], function (jasmine, SimpleMath) {
+
+        describe("SimpleMath", function() {
+
+            var simpleMath;
+
+            beforeEach(function() {
+               simpleMath = new SimpleMath;
+
+            });
+
+            describe("when SimpleMath is used to find the average of two values", function() {
+
+                it("should be able to find the average of two values", function() {
+
+                    expect(simpleMath.average(3, 6)).toEqual(4.5);
+
+                });
+            });
+
+        });
+
+    });
+
+}());
+</code></pre>
+	</section>
 </section>
 
 <section>
