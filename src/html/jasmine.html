@@ -636,6 +636,153 @@ describe("Testing toBePrimeNumber custom matcher", function() {
 
 <section>
 	<section>
+		<h2>Mocks in Jasmine</h2>
+		<ul>
+		 	<li>One of the primary aims of unit testing is to isolate a method or component that you want to test and see how it behaves under a variety of circumstances.</li>
+		 	<li>Unfortunately, many methods and/or objects have dependencies on other methods and/or objects, such as network connections, data sources, files...</li>
+			<li>This is where mocks come in. Mocks work by implementing the proxy pattern. 
+			<li>When you create a mock object, 
+			it creates a proxy object that takes the place of the real object. </li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>spyOn() Method in Jasmine</h2>
+		<ul>
+			<li>spyOn() can only be used when the method already exists on the object.</li>
+		</ul>
+		<pre><code>describe("Person toString() Test", function() {
+    it("calls the getName() function", function() {
+        var testPerson = new Person();
+        spyOn(testPerson, "getName");
+        testPerson.toString();
+        expect(testPerson.getName).toHaveBeenCalled();
+    });
+});</code></pre>
+	</section>
+
+	<section>
+		<h2>Creating Our Own Spy Method</h2>
+		<ul>
+			<li>Sometimes, it may be beneficial to completely replace the original method with a fake one for testing.</li>
+		</ul>
+		<pre><code>describe("Person toString() Test with Fake getName() Method", function() {
+    it("calls the fake getName() function", function() {
+        var testPerson = new Person();
+        testPerson.getName = jasmine.createSpy("getName spy");
+        testPerson.toString();
+        expect(testPerson.getName).toHaveBeenCalled();
+    });
+});</code></pre>
+	</section>
+
+	<section>
+		<h2>Exercise</h2>
+		<ul>
+			<li>Create a Person Model with the following methods:
+			<ul>
+				<li><em>validate</em> which check the age attribute (it should be &gt; 0)</li>
+				<li><em>onChange</em> which is called when you change the name attribute</li>
+				<li><em>onError</em> which is called when you set an age &lt; 0</li>
+			</ul>
+			<li>By using the jasmine spy you must verify that when I change person attributes <em>onChange</em> and <em>onError</em> methods are called.</li>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Solution models/person.js</h2>
+		<pre><code>/*global define*/
+(function () {
+    'use strict';
+
+    define([
+        'backbone',
+        'backboneLocalStorage'
+    ], function (Backbone) {
+
+        return Backbone.Model.extend({
+
+            initialize: function () {
+                this.on('change', this.onChange);
+                this.on('error', this.onError);
+            },
+
+            localStorage: new Backbone.LocalStorage('personModel'),
+
+            defaults: {
+                name: 'unknown',
+                age: 1,
+                id: 0
+            },
+
+            validate: function (attrs) {
+                if (attrs.hasOwnProperty('age') && attrs.age < 1) {
+                    this.trigger('error');
+                }
+            },
+
+            onChange: function (args) {
+                console.log('my new name is', this.get('name'))
+            },
+
+            onError: function (args) {
+                console.log('error.... ');
+            }
+        });
+    })
+}());</code></pre>
+	</section>
+
+	<section>
+		<h2>Solution models/person.spec.js</h2>
+		<pre><code>/*global define*/
+(function () {
+
+    'use strict'
+
+    define([
+        'jasmine',
+        '../../js/models/person'
+    ], function (jasmine, Person) {
+
+        describe('test fot the Person Model', function () {
+
+            beforeEach(function () {
+                spyOn(Person.prototype, 'onChange');
+                spyOn(Person.prototype, 'onError');
+                this.person = new Person();
+                this.changeCallback = jasmine.createSpy();
+                this.person.on('change', this.changeCallback);
+            });
+
+            it('should call onChange function when I change the name', function () {
+                this.person.set({
+                    name: 'Alex'
+                });
+                expect(Person.prototype.onChange).toHaveBeenCalled();
+                expect(this.changeCallback).toHaveBeenCalled();
+            });
+
+
+            it('should call onError function when I insert an age &lt; 0', function () {
+                this.person.set({
+                    age: -43
+                }, {
+                    validate: true
+                });
+                expect(Person.prototype.onError).toHaveBeenCalled();
+            });
+
+        });
+
+    });
+}());</code></pre>
+	</section>
+</section>
+
+<section>
+	<section>
 		<h2>Testing asynchronous (Ajax) JavaScript code</h2>
 		<ul>
 			<li>Jasmine includes powerful functions (runs(), waits(), and waitsFor()) for performing real Ajax testing (it requires the backend server to be up and running).</li>
