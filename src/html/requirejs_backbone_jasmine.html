@@ -29,10 +29,201 @@
 
 &lt;/head>
 &lt;body>
-    &lt;script data-main="????main" src="?????require.js">&lt;/script>
+    &lt;script data-main="src/js/main" src="?????require.js">&lt;/script>
 &lt;/body>
 &lt;/html></code></pre>
 	</section>
+
+	<section>
+		<h2>src/js/main.js</h2>
+		<pre><code>/*global require*/
+(function () {
+    'use strict';
+
+    var jasmineDir = '../../../bower_components/jasmine/lib/jasmine-core/',
+        vendorDir = '../../../bower_components/';
+
+    require.config({
+        urlArgs: 'bust=' + Math.random(),
+        paths: {
+            jasmine: jasmineDir + 'jasmine',
+            jasmineHtml: jasmineDir + 'jasmine-html',
+            backbone: vendorDir + 'backbone/backbone',
+            underscore: vendorDir + 'underscore/underscore',
+            backboneLocalStorage: vendorDir + 'backbone.localStorage/backbone.localStorage',
+            jquery: vendorDir + 'jquery/jquery',
+            jasmineJquery: vendorDir + 'jasmine-jquery/lib/jasmine-jquery',
+            text: vendorDir + 'requirejs-text/text'
+        },
+        shim: {
+            jasmineHtml: {
+                deps: ['jasmine']
+            },
+            jasmine: {
+                exports: 'jasmine'
+            },
+            underscore: {
+                exports: '_'
+            },
+            backbone: {
+                exports: 'Backbone',
+                deps: ['underscore']
+            },
+            backboneLocalStorage: {
+                deps: ['backbone', 'jquery']
+            },
+            jasmineJquery: {
+                deps: ['jasmine', 'jquery']
+            }
+        }
+    });
+
+    require([
+        'app'
+    ], function (app) {
+
+        app.start();
+    });
+}());</code></pre>
+	</section>
+
+	<section>
+		<h2>src/js/app.js</h2>
+		<pre><code>/*global define, window, setTimeout*/
+(function () {
+    'use strict';
+    define([
+        'jasmine',
+        'jasmineHtml',
+        // 'utils/backendController.spec',
+        // 'utils/jasmine.jquery.spec',
+        // 'models/person.spec',
+        // 'collections/persons.spec',
+        'views/headerView.spec'
+        // 'simpleMath.spec'
+    ], function (jasmine) {
+
+        var initialize = function () {
+            var jasmineEnv = jasmine.getEnv();
+            jasmineEnv.updateInterval = 1000;
+
+            var trivialReporter = new jasmine.TrivialReporter();
+
+            jasmineEnv.addReporter(trivialReporter);
+
+            jasmineEnv.specFilter = function (spec) {
+                return trivialReporter.specFilter(spec);
+            };
+
+            setTimeout(function () {
+                execJasmine();
+            }, 0);
+
+            function execJasmine() {
+                jasmineEnv.execute();
+            }
+
+        };
+
+        return {
+            start: initialize
+        };
+    });
+}());</code></pre>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h2>Writing a back-end API</h2>
+		<ul>
+			<li>This module will be used for allowing the client side of our application to communitcate with the server side of the application.</li>
+		</ul>
+	</section>
+	<section>
+		<h2>src/js/utils/backendController.js</h2>
+		<pre><code>/*global define*/
+(function () {
+    'use strict';
+
+    define([
+        'jquery'
+    ], function ($) {
+        return {
+
+            getPerson: function (id, successCallback) {
+                $.ajax({
+                    url: 'php/json_data_combo.php?id=' + id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: successCallback
+                });
+            },
+
+            setPerson: function (id, successCallback) {
+                $.ajax({
+                    url: '' + id,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: successCallback
+                });
+            }
+        };
+
+    });
+
+})();</code></pre>
+	</section>
+</section>
+
+<section>
+<section>
+	<h2>Model Person ./src/js/models/person.js</h2>
+<pre><code>/*define global*/
+(function () {
+    'use strict';
+
+    define([
+        'backbone',
+        '../utils/backendController'
+    ], function (Backbone, backendController) {
+
+        return Backbone.Model.extend({
+
+            url: function (id) {
+                return backendController.getPerson(id);
+            },
+
+            initialize: function () {
+                this.on('error', this.onError);
+                this.on('change:name', this.onChange);
+            },
+
+            defaults: {
+                name: 'unknown',
+                age: 1
+            },
+
+            validate: function (attrs) {
+                if (attrs.age &lt; 0) {
+                    this.trigger('error');
+                }
+            },
+
+            onError: function () {
+                console.log('you have to insert an age > 0');
+            },
+
+            onChange: function () {
+                console.log('you have changed my name');
+            }
+
+        });
+
+    });
+})();</code></pre>
+
+</section>
 </section>
 
 
