@@ -20,7 +20,7 @@ dependencies: [
 ]
 });
 Reveal.configure({
-keyboard: {
-27: function() {location.href="./"}, // do something custom when ESC is pressed
-}
+	keyboard: {
+		27: function() {location.href="../../"}, // do something custom when ESC is pressed
+	}
 });
