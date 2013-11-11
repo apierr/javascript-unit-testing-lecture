@@ -207,13 +207,17 @@ SimpleMath.prototype.average = function (number1, number2) {
 |-- indexSpec.html
 |-- src
 |   |-- utils
-|   |   `-- simpleMath.js
+|   |   |-- simpleMath.js
+|   |   `-- backendController.js
+|   |-- models
+|   |   `-- person.js
 |-- vendors
 `-- specs
     |-- app.js
     |-- main.js
     |-- utils
-    |   `-- simpleMath.spec.js
+    |   |-- simpleMath.spec.js
+|   |   `-- backendController.spec.js
     |-- models
     |   `-- person.spec.js
     |-- collections
@@ -657,6 +661,7 @@ describe("Testing toBePrimeNumber custom matcher", function() {
         spyOn(testPerson, "getName");
         testPerson.toString();
         expect(testPerson.getName).toHaveBeenCalled();
+        console.log(testPerson.getName.callCount); // 1
     });
 });</code></pre>
 	</section>
@@ -937,6 +942,90 @@ describe("Testing toBePrimeNumber custom matcher", function() {
 });</code></pre>
 	</section>
 
+	<section>
+		<h2>Exercise on ajax test</h2>
+		<ul>
+			<li>Write in utils directory a module <em>backendController</em>
+			which makes a real ajax request to a php file (you should pass id and successCallback parapeters)</li>
+			<li>Write in spec/utils a module which is able to the the ajax request<ul>
+				<li>you shoul test the correctness of the url</li>
+				<li>you shoul test that that the ajax request is completed successfully.</li>
+			</ul></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Exercise on ajax test: js/utils/backendController.js</h2>
+		<pre><code>/*global define*/
+(function () {
+    'use strict';
+
+    define([
+        'jquery'
+    ], function ($) {
+        return {
+            getPerson: function (id, successCallback) {
+                $.ajax({
+                    type: "GET",
+                    url: 'php/json_data_combo.php?id=' + id,
+                    dataType: "json",
+                    success: successCallback
+                });
+            }
+        }
+    });
+}());</code></pre>
+	</section>
+
+	<section>
+		<h2>Exercise on ajax test: spec/utils/backendController.spec.js</h2>
+		<pre><code>/*global define*/
+(function () {
+    define([
+        'jasmine',
+        'jquery',
+        '../../js/utils/backendController'
+    ], function (jasmine, $, backendContoller) {
+
+        describe('Test to verify that the faked AJAX request was going to the correct URL:', function () {
+
+            it("Should make an AJAX request to the correct URL", function () {
+
+                spyOn($, 'ajax');
+                backendContoller.getPerson(15);
+                expect($.ajax.mostRecentCall.args[0]['url']).toEqual('php/json_data_combo.php?id=15');
+                expect($.ajax.mostRecentCall.args[0]['type']).toEqual('GET');
+
+            });
+
+        });
+
+        describe('Test about a real ajax request', function () {
+
+            beforeEach(function () {
+                this.successCallback = jasmine.createSpy();
+                backendContoller.getPerson(2, this.successCallback);
+            });
+
+            it("Should make a real AJAX request", function () {
+
+                waitsFor(function () {
+                    return this.successCallback.callCount > 0;
+                }, 1000);
+
+                runs(function () {
+                    expect(this.successCallback).toHaveBeenCalled();
+                });
+
+            });
+
+        });
+
+    });
+
+}());</code></pre>
+	</section>
+
 </section>
 
 <section>
@@ -952,12 +1041,50 @@ more tests that require manipulating DOM elements.</li>
 
 	<section>
 		<h2>Configuring the jasmine-jquery plugin</h2>
-		TODO
+		<ul>
+			<li>In order to configure the jasmine-jquery plugin with Jasmine we need to perform the following steps:
+			<ul>
+				<li>Download the plugin ZIP file from https://github.com/velesin/ jasmine-jquery/downloads.</li>
+				<li>Get the jasmine-jquery.js file from the lib folder, and the jquery.js file from the vendor\jquery folder.</li>
+				<li>Include the two files in the main.js</li>
+			</ul></li>
+		</ul>
 	</section>
 
 	<section>
 		<h2>The loadFixtures module</h2>
-		TODO
+		<ul>
+			<li>The following code shows an example of the <em>loadFixutures</em> module
+				<pre><code>beforeEach(function() {
+       loadFixtures("template.html");
+});</code></pre></li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Example of loadFixtures module</h2>
+		<pre><code>/* define global*/
+(function () {
+    'use strict';
+    define([
+        'jquery',
+        'jquery',
+        'jasmineJquery'
+    ], function ($) {
+        describe('first test with jasmineJquery', function () {
+
+            beforeEach(function () {
+                loadFixtures('../../../js/templates/header.html');
+                this.el = $('#jasmine-fixtures').children();
+            });
+
+            it('should have the class navbar', function () {
+                expect(this.el).toHaveClass('navbar');
+            });
+
+        });
+    });
+}());</code></pre>
 	</section>
 
 </section>
@@ -969,18 +1096,7 @@ more tests that require manipulating DOM elements.</li>
 	<h3>References</h3>
 	<p>
 		<ul>
-			<li><a target="_" href="http://developpementagile.com/posts/2013/may/tests-javascript-avec-jasmine-partie-1">TESTS JAVASCRIPT AVEC JASMINE - PARTIE 1 : TESTER LE CODE OUBLIÉ</a></li>
+			<li><a target='_' href='http://www.amazon.com/JavaScript-Unit-Testing-Hazem-Saleh/dp/1782160620'>JavaScript Unit Testing</a></li>
 		</ul>
 	</p>
 </section>
-
-<section><h2>English to French</h2>
-<ul>
-	<li>devrait etre capable de trouver</li>
-	<li>Nombre premier. (7 est un nombre premier car il admet exactement deux diviseurs positifs distincts.)</li>
-	<li>au lieu de</li>
-	<li>une fonction qui calcule</li>
-	<li>une fonction qui ait</li>
-</ul>
-</section>
-
