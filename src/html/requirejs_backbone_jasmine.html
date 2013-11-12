@@ -227,6 +227,61 @@
 })();</code></pre>
 
 </section>
+<section>
+<h2>spec/js/models/person.spec.js</h2>
+<pre><code>/*global define, describe, it, expect*/
+(function () {
+    'use strict';
+
+    define([
+        'jasmine',
+        '../../js/models/person'
+    ], function (jasmine, Person) {
+
+        describe('test for the model person', function () {
+
+            beforeEach(function () {
+
+
+                spyOn(Person.prototype, 'onError');
+                spyOn(Person.prototype, 'onChange');
+                // this.changeCallback = jasmine.createSpy();
+                this.errorCallback = jasmine.createSpy('errorCallback');
+
+
+                this.person = new Person();
+                this.person.on('change:name', this.changeCallback);
+                this.person.on('error', this.errorCallback);
+            });
+
+            it('If I change the name I should trigger an action', function () {
+
+                this.person.set({
+                    name: 'Adriano'
+                });
+
+                // expect(this.changeCallback).toHaveBeenCalled();
+                expect(Person.prototype.onChange).toHaveBeenCalled();
+
+            });
+
+            it('If I set an age < 0 I must have an error', function () {
+                this.person.set({
+                    age: -10
+                }, {
+                    validate: true
+                });
+
+                expect(Person.prototype.onError).toHaveBeenCalled();
+                expect(this.errorCallback).toHaveBeenCalled();
+            });
+
+        });
+
+    });
+
+}());</code></pre>
+</section>
 </section>
 
 
