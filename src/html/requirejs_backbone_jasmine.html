@@ -341,18 +341,94 @@
     </section>
 </section>
 
+<section>
+    <section>
+        <h2>Person View Temaplate</h2>
+        <pre><code>&lt;li>
+    {{name}} {{surname}} {{age}}
+&lt;/li></code></pre>
+    </section>
+    <section>
+        <h2>View Person ./src/js/view/personsView.js</h2>
+        <pre><code>(function () {
+    'use strict';
+
+    define([
+        'backbone',
+        'text!./../../js/templates/header.html',
+    ], function (Backbone, headerTemplate) {
+
+        return Backbone.View.extend({
+
+            className: 'navbar navbar-inverse navbar-fixed-top',
+
+            initialize: function () {
+                this.render();
+            },
+
+            events: {
+                'click #Customize': 'loadFixture'
+            },
+
+            render: function () {
+                this.$el.html(headerTemplate);
+                return this;
+            },
+
+            loadFixture: function () {
+                /* TODO */
+            }
+        });
+    });
+
+})();</code></pre>
+    </section>
+    <section>
+        <h2>spec/js/view/personsView.spec.js</h2>
+        <pre><code>(function () {
+    'use strict';
+
+    define([
+        '../../js/views/headerView',
+        'jasmine'
+    ], function (HeaderView, jasmine) {
+
+        describe('Test of the Header View', function () {
+            beforeEach(function () {
+                spyOn(HeaderView.prototype, 'loadFixture');
+                this.headerView = new HeaderView();
+            });
+
+            it('should be the root DOM element .. ', function () {
+
+                expect(this.headerView.$el.hasClass('navbar')).toBe(true);
+
+            });
+
+            it('should call loadFixture when I click on .navbar-inners', function () {
+                runs(function () {
+                    this.headerView.$el.find('#Customize').click();
+                    expect(HeaderView.prototype.loadFixture).toHaveBeenCalled();
+                });
+
+            });
+        });
+
+    });
+})();</code></pre>
+    </section>
+</section>
+
+
 <!-- #####################################################################
 ####################### REFERENCES ############################################## 
 #####################################################################-->
 <section>
 	<h3>References</h3>
-	<p>
-	</p>
+	<ul>
+     <li></li>   
+    </ul>
 </section>
 
-<section><h2>English to French</h2>
-<ul>
-	<li></li>
-</ul>
 </section>
 
