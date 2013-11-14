@@ -283,7 +283,63 @@
 }());</code></pre>
 </section>
 </section>
+<section>
+    <section>
+        <h2>Collection Persons ./src/js/collections/persons.js</h2>
+        <pre><code>(function () {
+    'use strict';
 
+    define([
+        'backbone'
+    ], function (Backbone) {
+
+        return Backbone.Collection.extend({
+
+            url: 'http://localhost/~antoniopierro/javascript-unit-testing-lecture/src/exercises/php/json_data_combo.php'
+
+        });
+
+    });
+})();</code></pre>
+    </section>
+    <section>
+        <h2>spec/js/collections/persons.spec.js</h2>
+        <pre><code>(function () {
+    'use strict';
+
+    define([
+        '../../js/collections/persons'
+    ], function (PersonCollection) {
+        describe('This is a test for the collection', function () {
+
+            beforeEach(function () {
+                this.persons = new PersonCollection();
+            });
+
+            it('When fetching it should take a collection of person', function () {
+
+                runs(function () {
+                    this.persons.fetch();
+                    window.persons = this.persons;
+
+                });
+
+                waitsFor(function () {
+                    return this.persons.length > 0;
+                }, 2000);
+
+                runs(function () {
+                    expect(this.persons.length > 0).toBe(true);
+                });
+
+            });
+
+        });
+    });
+
+})();</code></pre>
+    </section>
+</section>
 
 <!-- #####################################################################
 ####################### REFERENCES ############################################## 
