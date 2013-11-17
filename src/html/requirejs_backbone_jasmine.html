@@ -284,7 +284,10 @@
 
 </section>
 <section>
-<h2>spec/js/models/person.spec.js</h2>
+    <h2>spec/js/models/person.spec.js</h2>
+        <ul>
+            <li>In the following example, we're going to test default values, attributes, state changes and validation rules.</li>
+        </ul>
 <pre><code>/*global define, describe, it, expect*/
 (function () {
     'use strict';
@@ -360,6 +363,9 @@
     </section>
     <section>
         <h2>spec/js/collections/persons.spec.js</h2>
+        <ul>
+            <li>We check the length property of the collection after fetching it to ensure the overall count is what we expect:</li>
+        </ul>
         <pre><code>(function () {
     'use strict';
 
@@ -376,8 +382,6 @@
 
                 runs(function () {
                     this.persons.fetch();
-                    window.persons = this.persons;
-
                 });
 
                 waitsFor(function () {
