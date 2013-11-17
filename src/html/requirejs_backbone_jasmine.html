@@ -177,6 +177,53 @@
 
 })();</code></pre>
 	</section>
+    <section>
+        <h2>./spec/js/utils/backendController.js</h2>
+        <pre><code>/*global define*/
+(function () {
+    define([
+        'jasmine',
+        'jquery',
+        '../../js/utils/backendController'
+    ], function (jasmine, $, backendContoller) {
+
+        describe('Test to verify that the faked AJAX request was going to the correct URL:', function () {
+
+            it("Should make an AJAX request to the correct URL", function () {
+
+                spyOn($, 'ajax');
+                backendContoller.getPerson(15);
+                expect($.ajax.mostRecentCall.args[0]['url']).toEqual('php/json_data_combo.php?id=15');
+                expect($.ajax.mostRecentCall.args[0]['type']).toEqual('GET');
+
+            });
+
+        });
+
+        describe("real ajax request test", function () {
+            beforeEach(function () {
+                this._id = 1;
+                this.successCallback = jasmine.createSpy();
+                backendContoller.getPerson(this._id, this.successCallback);
+            });
+
+            it("Should make a real AJAX request", function () {
+
+                waitsFor(function () {
+                    return this.successCallback.callCount > 0;
+                }, 1000);
+
+                runs(function () {
+                    expect(this.successCallback).toHaveBeenCalled();
+                });
+
+            });
+        });
+
+    });
+
+}());</code></pre>
+    </section>
 </section>
 
 <section>
