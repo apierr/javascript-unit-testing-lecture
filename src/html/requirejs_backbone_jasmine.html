@@ -23,6 +23,9 @@
 <section>
 	<section>
 		<h2>index.html</h2>
+        <ul>
+            <li>To take full advantage of require.js, it is suggested that you keep all inline script out of the HTML, and only reference require.js with a require call like so (data-main="src/js/main") to load your scripts</li>
+        </ul>
 		<pre><code>&lt;!DOCTYPE html>
 &lt;html>
 &lt;head>
@@ -39,6 +42,10 @@
 
 	<section>
 		<h2>src/js/main.js</h2>
+        <ul>
+            <li>In your main.js file, create a paths config that gives the script a module name.
+            Inside of main.js,  you can use require() to load app.js.</li>
+        </ul>
 		<pre><code>/*global require*/
 (function () {
     'use strict';
@@ -92,18 +99,20 @@
 
 	<section>
 		<h2>src/js/app.js</h2>
+        <ul>
+            <li>Inside of app.js, you can use define() to load any other scripts you need to run.</li>
+        </ul>
 		<pre><code>/*global define, window, setTimeout*/
 (function () {
     'use strict';
     define([
         'jasmine',
         'jasmineHtml',
-        // 'utils/backendController.spec',
-        // 'utils/jasmine.jquery.spec',
-        // 'models/person.spec',
-        // 'collections/persons.spec',
+        'utils/backendController.spec',
+        'utils/jasmine.jquery.spec',
+        'models/person.spec',
+        'collections/persons.spec',
         'views/headerView.spec'
-        // 'simpleMath.spec'
     ], function (jasmine) {
 
         var initialize = function () {
