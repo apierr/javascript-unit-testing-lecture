@@ -12,10 +12,10 @@ providing developers with a level of self-documenting code,
 and giving us a higher-level of software quality.
 
 In this course, we learn how to write unit testing for [Backbone.js](http://backbonejs.org/) web applications 
-using two popular JavaScript testing frameworks: [QUnit](http://qunitjs.com/) and [Jasmine](http://pivotal.github.io/jasmine/). 
+using two popular JavaScript testing frameworks: [QUnit](http://qunitjs.com/) and [Jasmine](https://jasmine.github.io/). 
 QUnit is a javascript test-driven development ([TDD](http://en.wikipedia.org/wiki/Test-driven_development)) framework while  
 Jasmine is a javascript behavior-driven development ([BDD](http://en.wikipedia.org/wiki/Behavior-driven_development)) 
-framework from Pivotal LabAs.
+framework from Pivotal Labs.
 
 Firstly, we will precisely explain what unit testing is, why to use it,
 what TDD and DBB are and the difference between them.
